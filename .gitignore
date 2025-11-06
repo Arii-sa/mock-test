@@ -9,6 +9,7 @@
 /storage/framework/views/*
 
 /vendor
+src/vendor
 
 .env
 .env.backup
