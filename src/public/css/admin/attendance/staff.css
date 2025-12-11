@@ -1,0 +1,49 @@
+.staff-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+.staff-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 30px;
+    font-weight: bold;
+    border-left: 4px solid #333;
+    padding-left: 12px;
+}
+
+.staff-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    font-size: 15px;
+}
+
+.staff-table th {
+    background: #F0EFF2;
+    padding: 14px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.staff-table td {
+    padding: 14px;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.staff-table tr:last-child td {
+    border-bottom: none;
+}
+
+.detail-link {
+    color: black;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.detail-link:hover {
+    opacity: 0.7;
+}

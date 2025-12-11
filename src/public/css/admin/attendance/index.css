@@ -1,0 +1,69 @@
+.attendance-container {
+    width: 80%;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.attendance-title {
+    font-size: 26px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.date-switch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    gap: 30px;
+}
+
+.prev-day, .next-day {
+    color: #000;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.current-date input {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 1px solid #000;
+    border-radius: 6px;
+    text-align: center;
+    width: 150px;
+}
+
+/* 表 */
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+.attendance-table thead {
+    background-color: #f0f0f0;
+}
+
+.attendance-table th,
+.attendance-table td {
+    border: 1px solid #ccc;
+    padding: 14px;
+    font-size: 16px;
+}
+
+.attendance-table th {
+    font-weight: bold;
+}
+
+.detail-link {
+    color: #000;
+    text-decoration: underline;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.no-data {
+    padding: 20px;
+    color: #666;
+}

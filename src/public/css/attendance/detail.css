@@ -1,0 +1,71 @@
+.detail-container {
+    width: 60%;
+    margin: 40px auto;
+    padding: 40px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.page-title {
+    font-size: 24px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.detail-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+
+.detail-row label {
+    width: 20%;
+    font-weight: bold;
+}
+
+.value-box {
+    width: 70%;
+    background: #f8f8f8;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.time-edit input {
+    width: 110px;
+    padding: 8px;
+    margin: 0 5px;
+}
+
+textarea {
+    width: 70%;
+    min-height: 60px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.btn-submit {
+    width: 120px;
+    height: 40px;
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.error {
+    color: red;
+    font-size: 13px;
+}
+
+.alert {
+    padding: 12px;
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}

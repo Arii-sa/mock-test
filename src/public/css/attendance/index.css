@@ -1,0 +1,66 @@
+.attendance-container {
+    text-align: center;
+    margin-top: 80px;
+    background-color: #F0EFF2;
+}
+
+.status-label span {
+    background: #D9D9D9;
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 14px;
+}
+
+.date {
+    margin-top: 30px;
+    font-size: 20px;
+    color: #333;
+}
+
+.time {
+    margin-top: 10px;
+    font-size: 64px;
+    font-weight: bold;
+    color: #000;
+}
+
+.button-group {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-start {
+    background-color: #000;
+    color: #fff;
+}
+
+.btn-leave {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #000;
+}
+
+.btn-break,
+.btn-break-return {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #000;
+}
+
+.message {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 40px;
+    color: #000;
+}

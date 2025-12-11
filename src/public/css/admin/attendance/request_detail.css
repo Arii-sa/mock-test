@@ -1,0 +1,63 @@
+.request-detail-page {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.detail-card {
+    background: #F0EFF2;
+    border-radius: 12px;
+    padding: 30px 40px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+
+.label {
+    font-size: 16px;
+    color: #666;
+    width: 160px;
+}
+
+.value {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.tilde {
+    margin: 0 10px;
+}
+
+.approve-btn {
+    margin-top: 30px;
+    display: block;
+    padding: 12px 40px;
+    background: #000;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: auto;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.approve-btn:hover {
+    opacity: 0.8;
+}

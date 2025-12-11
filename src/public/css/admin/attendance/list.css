@@ -1,0 +1,43 @@
+.attendance-detail-container {
+    width: 90%;
+    margin: 30px auto;
+}
+
+.page-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.attendance-table th,
+.attendance-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.attendance-table th {
+    background: #f3f3f3;
+}
+
+.detail-btn {
+    padding: 6px 12px;
+    background: #3490dc;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.detail-btn:hover {
+    background: #2779bd;
+}
+
+.pagination {
+    margin-top: 15px;
+}
