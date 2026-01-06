@@ -50,19 +50,16 @@ class ChangeDatetimeToTimeOnAttendanceTables extends Migration
             $table->dateTime('work_out')->nullable()->change();
         });
 
-        // breaks
         Schema::table('breaks', function (Blueprint $table) {
             $table->dateTime('break_start')->nullable(false)->change();
             $table->dateTime('break_end')->nullable()->change();
         });
 
-        // attendance_corrections
         Schema::table('attendance_corrections', function (Blueprint $table) {
             $table->dateTime('request_start_time')->nullable()->change();
             $table->dateTime('request_end_time')->nullable()->change();
         });
 
-        // attendance_correction_breaks
         Schema::table('attendance_correction_breaks', function (Blueprint $table) {
             $table->dateTime('break_start')->nullable()->change();
             $table->dateTime('break_end')->nullable()->change();

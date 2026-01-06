@@ -12,12 +12,13 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run(): void
-{
-    $this->call([
-        StatusesTableSeeder::class,
-        ApplicationStatusesTableSeeder::class,
-        AdminSeeder::class,
-        UserSeeder::class,
-    ]);
-}
+    {
+        $this->call([
+            StatusesTableSeeder::class,
+            ApplicationStatusesTableSeeder::class,
+            AdminSeeder::class,
+            UserSeeder::class,
+            AttendanceSeeder::class,
+        ]);
+    }
 }

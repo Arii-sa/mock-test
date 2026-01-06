@@ -8,17 +8,6 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AttendanceCorrectionController;
 
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 // ============================
 // 認証系（一般ユーザー）
 // ============================
@@ -26,6 +15,10 @@ use App\Http\Controllers\AttendanceCorrectionController;
 // 会員登録
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
+
+// ログイン画面
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 
 // ログアウト
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -63,17 +56,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/attendance/leave', [AttendanceController::class, 'leave'])->name('attendance.leave');
 
     // 勤怠一覧
-    Route::get('/attendance/list', [AttendanceController::class, 'list'])->name('attendance.list');
+    Route::get('/attendance/list', [AttendanceController::class, 'list'])
+    ->name('attendance.list');
 
     // 勤怠詳細
-    Route::get('/attendance/detail/{idOrDate}', [AttendanceController::class, 'show'])->name('attendance.detail');
+    Route::get('/attendance/detail/{idOrDate}', [AttendanceController::class, 'show'])
+    ->name('attendance.detail');
 
     // 勤怠 修正申請（仮保存）
     Route::post('/attendance/detail/{idOrDate}/request', [AttendanceCorrectionController::class, 'request'])
     ->name('attendance.request');
 
     // 申請一覧
-    Route::get('/attendance_correction/list', [AttendanceCorrectionController::class, 'index'])
+    Route::get('/stamp_correction_request/list', [AttendanceCorrectionController::class, 'index'])
     ->name('attendance_correction.list');
 
 });

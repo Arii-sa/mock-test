@@ -9,7 +9,7 @@ class CreateAttendanceCorrectionBreaksTable extends Migration
     public function up(): void
     {
         Schema::create('attendance_correction_breaks', function (Blueprint $table) {
-            $table->id();
+            $table ->id();
             $table->foreignId('correction_id')
                   ->constrained('attendance_corrections')
                   ->onDelete('cascade');
@@ -19,7 +19,6 @@ class CreateAttendanceCorrectionBreaksTable extends Migration
         });
     }
 
-    
     public function down(): void
 
     {

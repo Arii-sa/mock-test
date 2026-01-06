@@ -1,71 +1,135 @@
 .attendance-detail-container {
-    width: 60%;
-    margin: 40px auto;
-    padding: 40px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 1512px;
+    min-width: 1400px;
+
+    margin: 0 auto;
+    padding: 40px 0 80px;
+    box-sizing: border-box;
+}
+
+.title-box {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .page-title {
     font-size: 24px;
-    margin-bottom: 30px;
     font-weight: bold;
+    margin-bottom: 30px;
+    padding-left: 12px;
+    border-left: 4px solid #000;
+}
+
+.attendance-detail__table {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+
+    box-shadow: 0 0 0 1px #e0e0e0;
+    overflow: hidden;
 }
 
 .detail-row {
-    display: flex;
+    display: grid;
+    grid-template-columns: 300px 600px;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 22px;
+
+    padding: 20px 24px;
+    border-bottom: 1px solid #e0e0e0;
+    box-sizing: border-box;
 }
 
-.detail-row label {
-    width: 20%;
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.label-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    padding-left: 24px;
+}
+
+
+.value-box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+}
+
+.value-text{
+    font-size: 14px;
     font-weight: bold;
 }
 
-.value-box {
-    width: 70%;
-    background: #f8f8f8;
-    padding: 10px;
-    border-radius: 4px;
-}
-
-.time-edit input {
-    width: 110px;
-    padding: 8px;
-    margin: 0 5px;
-}
-
-textarea {
-    width: 70%;
-    min-height: 60px;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
-.btn-submit {
+.value-box input[type="time"] {
     width: 120px;
-    height: 40px;
-    background: black;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    margin-top: 20px;
-    cursor: pointer;
+    height: 36px;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px 8px;
+    box-sizing: border-box;
 }
 
-.error {
+.note {
+    width: 300px;
+    min-height: 80px;
+
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    box-sizing: border-box;
+
+    resize: vertical;
+    font-size: 15px;
+}
+
+.detail-row__error {
+    grid-column: 2 / 3;
+    margin-top: 8px;
+}
+
+.error-message {
     color: red;
     font-size: 13px;
 }
 
-.alert {
-    padding: 12px;
-    background: #fff3cd;
-    border: 1px solid #ffeeba;
+.session-message {
+    text-align: center;
+    padding: 16px;
+    color: #008000;
+    font-size: 14px;
+}
+
+.button-area {
+    max-width: 900px;
+    margin: 32px auto 0;
+    text-align: right;
+}
+
+.btn-submit {
+    min-width: 120px;
+    height: 40px;
+
+    background-color: #000;
+    color: #fff;
+
+    border: none;
     border-radius: 4px;
-    margin-bottom: 15px;
+
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-message{
+    color: red;
+    font-size: 13px;
 }

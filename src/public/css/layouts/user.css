@@ -1,25 +1,43 @@
 body {
     font-family: 'Noto Sans JP', sans-serif;
-    background-color: #000;
-    color: #fff;
-    margin: 0;
+    background-color: #fff;
+    margin: 0 auto;
     padding: 0;
+
+    width: 100%;
+    max-width: 1512px;
+    min-width: 1400px;
+
+    min-height: 100vh;
 }
 
 .auth-header {
-    background-color: #000;
-    padding: 10px 20px;
+    width: 100%;
+    max-width: 1512px;
+    min-width: 1400px;
+
     display: flex;
+    justify-content: space-between;
     align-items: center;
+
+    background-color: #000;
+    color: #fff;
+
+    height: 80px;
+    padding: 0 35px;
+    box-sizing: border-box;
+
 }
 
-.auth-header__logo img {
-    height: 30px;
-}
 
 .auth-main {
+    width: 100%;
+    max-width: 1512px;
+    min-width: 1400px;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(100vh - 60px);
+
+    min-height: calc(100vh - 80px);
 }

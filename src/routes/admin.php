@@ -28,10 +28,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
             ->name('attendance.list');
 
         // 勤怠詳細
-        Route::get('/attendance/{id}', [AttendanceController::class, 'show'])
+        Route::get('/attendance/{idOrDate}', [AttendanceController::class, 'show'])
             ->name('attendance.detail');
         // 勤怠更新（管理者）
-        Route::patch('/attendance/{id}', [AttendanceController::class, 'update'])
+        Route::patch('/attendance/{idOrDate}', [AttendanceController::class, 'update'])
         ->name('attendance.update');
 
 

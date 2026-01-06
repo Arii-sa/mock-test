@@ -1,69 +1,105 @@
 .attendance-container {
-    width: 80%;
-    margin: 40px auto;
-    text-align: center;
+    width: 100%;
+    max-width: 1000px;
+
+    margin: 0 auto;
+    padding-top: 40px;
+    box-sizing: border-box;
 }
 
 .attendance-title {
-    font-size: 26px;
-    margin-bottom: 30px;
+    font-size: 20px;
     font-weight: bold;
+
+    margin-bottom: 24px;
+    padding-left: 12px;
+    border-left: 4px solid #000;
 }
 
 .date-switch {
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin-bottom: 30px;
-    gap: 30px;
-}
+    justify-content: space-between;
 
-.prev-day, .next-day {
-    color: #000;
-    font-size: 16px;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.current-date input {
-    padding: 10px 20px;
-    font-size: 16px;
-    border: 1px solid #000;
-    border-radius: 6px;
-    text-align: center;
-    width: 150px;
-}
-
-/* 表 */
-.attendance-table {
-    width: 100%;
-    border-collapse: collapse;
     background-color: #fff;
+    border-radius: 6px;
+
+    padding: 12px 20px;
+    margin-bottom: 24px;
+    box-sizing: border-box;
 }
 
-.attendance-table thead {
-    background-color: #f0f0f0;
-}
-
-.attendance-table th,
-.attendance-table td {
-    border: 1px solid #ccc;
-    padding: 14px;
-    font-size: 16px;
-}
-
-.attendance-table th {
+.prev-day,
+.next-day {
+    color: #000;
+    text-decoration: none;
+    font-size: 14px;
     font-weight: bold;
 }
 
-.detail-link {
-    color: #000;
-    text-decoration: underline;
+.prev-day:hover,
+.next-day:hover {
+    opacity: 0.7;
+}
+
+.current-date {
+    display: flex;
+    align-items: center;
+}
+
+.date-input {
+    border: none;
+    background: transparent;
+
+    font-size: 14px;
     font-weight: bold;
     cursor: pointer;
 }
 
-.no-data {
-    padding: 20px;
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    background-color: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.attendance-table thead tr {
+    background-color: #f8f8f8;
+}
+
+.attendance-table th {
+    padding: 14px 8px;
+    font-size: 13px;
+    font-weight: bold;
     color: #666;
+
+    text-align: center;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.attendance-table td {
+    padding: 14px 8px;
+    font-size: 13px;
+    text-align: center;
+
+    border-bottom: 1px solid #eaeaea;
+}
+
+.attendance-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.detail-link {
+    font-size: 13px;
+    font-weight: bold;
+    color: #000;
+    text-decoration: none;
+}
+
+.no-data {
+    text-align: center;
+    padding: 20px;
+    color: #999;
 }

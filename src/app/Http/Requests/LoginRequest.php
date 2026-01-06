@@ -16,12 +16,8 @@ class LoginRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules(): array
+
+    public function rules()
     {
         return [
             'email' => ['required', 'email'],
@@ -33,6 +29,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'email.required' => 'メールアドレスを入力してください',
+            'email.email' => 'メールアドレスを入力してください',
             'password.required' => 'パスワードを入力してください',
         ];
     }

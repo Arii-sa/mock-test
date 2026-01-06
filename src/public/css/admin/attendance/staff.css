@@ -1,16 +1,24 @@
 .staff-container {
     width: 100%;
-    max-width: 900px;
-    margin: 40px auto;
+    max-width: 1512px;
+    min-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 0 80px;
+    box-sizing: border-box;
 }
 
-.staff-title {
-    text-align: center;
+.staff-box{
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.page-title {
     font-size: 24px;
-    margin-bottom: 30px;
     font-weight: bold;
-    border-left: 4px solid #333;
+    margin-bottom: 30px;
     padding-left: 12px;
+    border-left: 4px solid #000;
 }
 
 .staff-table {
@@ -23,15 +31,21 @@
 }
 
 .staff-table th {
-    background: #F0EFF2;
-    padding: 14px;
-    text-align: left;
+    padding: 14px 8px;
+    font-size: 16px;
     font-weight: bold;
+    color: #666;
+    text-align: center;
+    border-bottom: 2px solid #e0e0e0;
 }
 
 .staff-table td {
-    padding: 14px;
-    border-bottom: 1px solid #E0E0E0;
+    padding: 14px 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #666;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .staff-table tr:last-child td {
@@ -39,11 +53,8 @@
 }
 
 .detail-link {
-    color: black;
+    font-size: 16px;
     font-weight: bold;
-    text-decoration: underline;
-}
-
-.detail-link:hover {
-    opacity: 0.7;
+    color: #000;
+    text-decoration: none;
 }

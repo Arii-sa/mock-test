@@ -5,16 +5,18 @@
 }
 
 .status-label span {
-    background: #D9D9D9;
+    background: #b9b7b7de;
     border-radius: 20px;
     padding: 6px 16px;
     font-size: 14px;
+    color: #6c6b6b;
+    font-weight: bold;
 }
 
 .date {
     margin-top: 30px;
     font-size: 20px;
-    color: #333;
+    color: #2a2828;
 }
 
 .time {
@@ -28,14 +30,14 @@
     margin-top: 40px;
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 45px;
 }
 
 .btn {
     border: none;
-    border-radius: 8px;
-    padding: 12px 40px;
-    font-size: 18px;
+    border-radius: 15px;
+    padding: 12px 55px;
+    font-size: 22px;
     font-weight: bold;
     cursor: pointer;
 }
@@ -46,16 +48,15 @@
 }
 
 .btn-leave {
-    background-color: #fff;
-    color: #000;
-    border: 2px solid #000;
+    background-color: #000;
+    color: #fff;
+    
 }
 
 .btn-break,
 .btn-break-return {
     background-color: #fff;
     color: #000;
-    border: 2px solid #000;
 }
 
 .message {

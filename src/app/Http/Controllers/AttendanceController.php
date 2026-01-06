@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\AttendanceCorrection;
 use App\Models\Attendance;
 use App\Models\BreakTime;
 use App\Models\Status;
@@ -18,29 +19,30 @@ class AttendanceController extends Controller
     {
         $user = Auth::user();
 
-        // 今日の勤怠情報を取得
-        $attendance = Attendance::where('user_id', $user->id)
-            ->whereDate('work_date', Carbon::today())
-            ->first();
+        $attendance = Attendance::with('status', 'breaks')
+        ->where('user_id', $user->id)
+        ->whereDate('work_date', Carbon::today())
+        ->first();
 
-        // ステータス判定
-        $status = 'off'; // デフォルト勤務外
+        $status = 'off';
         $statusLabel = '勤務外';
 
-        if ($attendance) {
-            $onBreak = $attendance->breaks()
-                ->whereNull('break_end')
-                ->exists();
+        if ($attendance && $attendance->status) {
+            switch ($attendance->status->name) {
+                case '出勤中':
+                    $status = 'working';
+                    $statusLabel = '出勤中';
+                    break;
 
-            if ($attendance->work_out) {
-                $status = 'finished';
-                $statusLabel = '退勤済';
-            } elseif ($onBreak) {
-                $status = 'break';
-                $statusLabel = '休憩中';
-            } elseif ($attendance->work_in) {
-                $status = 'working';
-                $statusLabel = '出勤中';
+                case '休憩中':
+                    $status = 'break';
+                    $statusLabel = '休憩中';
+                    break;
+
+                case '退勤済':
+                    $status = 'finished';
+                    $statusLabel = '退勤済';
+                    break;
             }
         }
 
@@ -54,7 +56,6 @@ class AttendanceController extends Controller
     {
         $today = Carbon::today();
 
-        // 今日すでに出勤しているか
         $exist = Attendance::where('user_id', Auth::id())
             ->whereDate('work_date', $today)
             ->exists();
@@ -68,7 +69,7 @@ class AttendanceController extends Controller
             'user_id'   => Auth::id(),
             'work_date' => $today,
             'work_in'   => now()->format('H:i:s'),
-            'status_id' => 2,   // 出勤中
+            'status_id' => Status::where('name', '出勤中')->value('id'),   // 出勤中
         ]);
 
         return redirect()->route('attendance.index')->with('message', '出勤しました');
@@ -86,7 +87,6 @@ class AttendanceController extends Controller
             return back()->with('error', '出勤前に休憩はできません');
         }
 
-        // すでに休憩中なら不可
         if ($attendance->breaks()->whereNull('break_end')->exists()) {
             return back()->with('error', 'すでに休憩中です');
         }
@@ -96,8 +96,9 @@ class AttendanceController extends Controller
             'break_start'   => now()->format('H:i:s'),
         ]);
 
-        // ステータス：休憩中（3）
-        $attendance->update(['status_id' => 3]);
+        $attendance->update([
+            'status_id' => Status::where('name', '休憩中')->value('id'),
+        ]);
 
 
         return redirect()->route('attendance.index')->with('message', '休憩を開始しました');
@@ -119,8 +120,10 @@ class AttendanceController extends Controller
 
             $break->update(['break_end' => now()->format('H:i:s')]);
 
-            // ステータス：出勤中（2）
-            $attendance->update(['status_id' => 2]);
+            $attendance->update([
+                'status_id' => Status::where('name', '出勤中')->value('id'),
+            ]);
+
         return redirect()->route('attendance.index')->with('message', '休憩を終了しました');
     }
 
@@ -131,15 +134,15 @@ class AttendanceController extends Controller
     {
         $attendance = $this->getTodayAttendance();
 
-        // すでに退勤済みなら不可
         if ($attendance->work_out) {
             return redirect()->route('attendance.index')->with('error', 'すでに退勤済みです');
         }
 
         $attendance->update([
             'work_out'  => now()->format('H:i:s'),
-            'status_id' => 4, // 退勤済
+            'status_id' => Status::where('name', '退勤済')->value('id'),
         ]);
+
 
         return redirect()->route('attendance.index')->with('message', 'お疲れ様でした。');
     }
@@ -181,9 +184,21 @@ class AttendanceController extends Controller
                 ];
             });
 
+        $corrections = \App\Models\AttendanceCorrection::with('breaks', 'attendance')
+        ->where('user_id', Auth::id())
+        ->whereHas('attendance', function($q) use ($startOfMonth, $endOfMonth) {
+            $q->whereBetween('work_date', [$startOfMonth, $endOfMonth]);
+        })
+        ->get()
+        ->mapWithKeys(function($item) {
+            return [$item->attendance->work_date->format('Y-m-d') => $item];
+        });
+
+
         return view('attendance.list', [
             'dates' => $dates,
             'attendances' => $attendances,
+            'corrections' => $corrections,
             'month' => $month,
         ]);
     }
@@ -192,47 +207,30 @@ class AttendanceController extends Controller
     {
         $userId = Auth::id();
 
-        // ----------------------------------------
-        // 数字 = Attendance ID として検索
-        // ----------------------------------------
         if (ctype_digit($idOrDate)) {
-
-            $attendance = Attendance::with('breaks')
-                ->where('user_id', $userId)
-                ->findOrFail($idOrDate);
-
+            $attendance = Attendance::find($idOrDate);
         } else {
-
-            // ----------------------------------------
-            // 日付指定の場合
-            // ----------------------------------------
             $date = Carbon::parse($idOrDate)->format('Y-m-d');
-
-            $attendance = Attendance::with('breaks')
-                ->where('user_id', $userId)
+            $attendance = Attendance::where('user_id', $userId)
                 ->whereDate('work_date', $date)
                 ->first();
-
-            // 出勤していない → 新規モデル（id=null）を返す
-            if (!$attendance) {
-                $attendance = new Attendance([
-                    'user_id'   => $userId,
-                    'work_date' => $date,
-                    'status_id' => 1, // 勤務外
-                ]);
-
-                // 空の休憩をセット
-                $attendance->setRelation('breaks', collect());
-            }
         }
 
-        // 申請履歴
-        $latestCorrection = \App\Models\AttendanceCorrection::where('attendance_id', $attendance->id)
-            ->orderBy('id', 'desc')
-            ->first();
+        if (!$attendance) {
+            $attendance = Attendance::make(['work_date' => $date ?? now()->format('Y-m-d')]);
+
+            $attendance->setRelation('breaks', collect());
+        }
+
+        // 最新の修正申請
+        $latestCorrection = $attendance->id
+            ? AttendanceCorrection::where('attendance_id', $attendance->id)
+                ->with('breaks')
+                ->orderBy('id', 'desc')
+                ->first()
+            : null;
 
         return view('attendance.detail', compact('attendance', 'latestCorrection'));
     }
-
 
 }

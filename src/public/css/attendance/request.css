@@ -1,67 +1,77 @@
 .request-container {
-    width: 80%;
-    margin: 40px auto;
+    width: 100%;
+    max-width: 1512px;
+    min-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 0 80px;
+    box-sizing: border-box;
+}
+
+.request-box {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .page-title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 30px;
+    padding-left: 12px;
+    border-left: 4px solid #000;
 }
 
 .tabs {
     display: flex;
-    gap: 40px;
-    margin-bottom: 10px;
-}
-
-.tab {
-    font-size: 18px;
-    color: #777;
-    padding-bottom: 5px;
-}
-
-.tab.active {
-    font-weight: bold;
-    color: #000;
-    border-bottom: 3px solid #000;
-}
-
-.divider {
-    width: 100%;
-    height: 1px;
-    background-color: #000;
+    gap: 20px;
     margin-bottom: 25px;
 }
 
-.table-area {
-    background: #F0EFF2;
-    padding: 20px;
-    border-radius: 8px;
+.tab {
+    padding: 8px 18px;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    color: #555;
+    font-weight: bold;
 }
 
-table {
+.tab.active {
+    border-bottom: 2px solid #000;
+    color: #000;
+}
+
+.table-area {
     width: 100%;
     border-collapse: collapse;
-    text-align: left;
+
+    background-color: #fff;
+    border-radius: 6px;
+    overflow: hidden;
 }
 
-thead th {
-    font-size: 14px;
+.table-area th {
+    padding: 14px 8px;
+    font-size: 13px;
     font-weight: bold;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #ccc;
+    color: #666;
+    text-align: center;
+    border-bottom: 2px solid #e0e0e0;
 }
 
-tbody td {
-    padding: 12px 0;
-    border-bottom: 1px solid #ddd;
-    font-size: 14px;
+.table-area td {
+    padding: 14px 8px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #666;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .detail-link {
-    color: #333;
-    text-decoration: underline;
+    font-size: 13px;
+    font-weight: bold;
+    color: #000;
+    text-decoration: none;
 }
 
 .empty {

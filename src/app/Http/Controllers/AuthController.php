@@ -51,6 +51,33 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
+    public function login(LoginRequest $request)
+    {
+        // バリデーション済みデータ取得
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            // メール未認証チェック
+            if (is_null($user->email_verified_at)) {
+                Auth::logout();
+                return redirect()->route('verification.notice');
+            }
+
+            // セッション再生成
+            $request->session()->regenerate();
+
+            // ログイン成功
+            return redirect()->intended(route('attendance.index'));
+        }
+
+        // 認証失敗
+        return back()->withErrors([
+            'email' => 'ログイン情報が登録されていません',
+        ])->withInput($request->only('email'));
+    }
+    
     /**
      * ログアウト処理
      */

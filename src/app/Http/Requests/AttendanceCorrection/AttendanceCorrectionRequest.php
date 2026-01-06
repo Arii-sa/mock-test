@@ -16,7 +16,8 @@ class AttendanceCorrectionRequest extends FormRequest
     {
         return [
             // 勤怠ID
-            'attendance_id' => 'required|exists:attendances,id',
+            'attendance_id' => 'nullable|exists:attendances,id',
+
 
             // 備考
             'reason' => 'required|string|max:500',
@@ -52,9 +53,6 @@ class AttendanceCorrectionRequest extends FormRequest
         ];
     }
 
-    /**
-     * 追加の時系列バリデーション（FN029 対応）
-     */
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
@@ -79,7 +77,7 @@ class AttendanceCorrectionRequest extends FormRequest
                 $start = $b['start'] ?? null;
                 $end   = $b['end'] ?? null;
 
-                if ($start && $in && $start < $in) {
+                if ($start && $out && $start > $out) {
                     $validator->errors()->add("breaks.$i.start", '休憩時間が不適切な値です');
                 }
 

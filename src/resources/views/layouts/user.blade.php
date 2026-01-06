@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
@@ -11,8 +12,8 @@
     </head>
     <body>
         <header class="auth-header">
-            <div class="auth-header__logo">
-                <img src="{{ asset('images/coachtech_logo_white.png') }}" alt="COACHTECHロゴ">
+            <div class="header__logo">
+                <img src="{{ asset('image/logo.png') }}" alt="ロゴ">
             </div>
 
         </header>

@@ -8,6 +8,7 @@ use App\Models\AttendanceCorrection;
 use App\Models\AttendanceCorrectionBreak;
 use App\Models\Attendance;
 use App\Models\ApplicationStatus;
+use App\Http\Requests\AttendanceCorrection\AttendanceCorrectionRequest;
 use Carbon\Carbon;
 
 class AttendanceCorrectionController extends Controller
@@ -16,16 +17,14 @@ class AttendanceCorrectionController extends Controller
     public function index(Request $request)
     {
         $activeTab = $request->tab === 'approved' ? 'approved' : 'pending';
+        $pendingId  = ApplicationStatus::where('name', '承認待ち')->value('id');
+        $approvedId = ApplicationStatus::where('name', '承認済み')->value('id');
 
         $requests = AttendanceCorrection::where('user_id', Auth::id())
-            ->when($activeTab === 'pending', function ($q) {
-                $q->where('applications_status_id', 1); // 承認待ち
-            })
-            ->when($activeTab === 'approved', function ($q) {
-                $q->where('applications_status_id', 2); // 承認済み
-            })
+            ->when($activeTab === 'pending', fn($q) => $q->where('applications_status_id', $pendingId))
+            ->when($activeTab === 'approved', fn($q) => $q->where('applications_status_id', $approvedId))
             ->with(['attendance', 'applicationStatus'])
-            ->orderBy('id', 'desc')
+            ->orderByDesc('id')
             ->get();
 
         return view('attendance.request', compact('requests', 'activeTab'));
@@ -76,79 +75,57 @@ class AttendanceCorrectionController extends Controller
 
 
     // 申請送信
-    public function request(Request $request, $idOrDate)
+    public function request(AttendanceCorrectionRequest $request, $idOrDate)
     {
         $userId = Auth::id();
 
-        // ===============================
-        // ① attendance 登録 or 取得
-        // ===============================
         if (ctype_digit($idOrDate)) {
 
-            $attendance = Attendance::where('user_id', $userId)
-                ->findOrFail($idOrDate);
-
-            $date = $this->extractDate($attendance->work_date);
-
+            $attendance = Attendance::where('user_id', $userId)->find($idOrDate);
+            if (!$attendance) {
+                abort(404, '指定の勤怠が見つかりません');
+            }
         } else {
 
-            $date = $this->extractDate($idOrDate);
-
-            $attendance = Attendance::create([
-                'user_id'   => $userId,
-                'work_date' => $date,
-                'status_id' => 2,
-            ]);
+            $date = Carbon::parse($idOrDate)->format('Y-m-d');
+            $attendance = Attendance::firstOrCreate(
+                ['user_id' => $userId, 'work_date' => $date],
+                ['status_id' => 1]
+            );
         }
 
+        $data = $request->validated();
 
-        // ===============================
-        // ② 修正申請のメイン作成
-        // ===============================
         $correction = AttendanceCorrection::create([
             'attendance_id'          => $attendance->id,
             'user_id'                => $userId,
-            'reason'                 => $request->reason,
-            'applications_status_id' => 1,     // 承認待ち
-            'request_start_time'     => $request->work_in,   // ★修正後
-            'request_end_time'       => $request->work_out,  // ★修正後
+            'reason'                 => $request->input('reason'),
+            'applications_status_id' => ApplicationStatus::where('name', '承認待ち')->first()->id,
+            'request_start_time'     => $request->input('work_in'),
+            'request_end_time'       => $request->input('work_out'),
         ]);
 
-
-        // ===============================
-        // ③ 修正後の休憩（複数）を保存
-        // ===============================
-        if ($request->breaks) {
-            foreach ($request->breaks as $b) {
-
-                $start = $b['start'] ?? null;
-                $end   = $b['end']   ?? null;
-
-                if ($start || $end) {
-                    AttendanceCorrectionBreak::create([
-                        'correction_id' => $correction->id,
-                        'break_start'   => $start,
-                        'break_end'     => $end,
-                    ]);
-                }
+        foreach ($data['breaks'] ?? [] as $b) {
+            if (!empty($b['start']) || !empty($b['end'])) {
+                AttendanceCorrectionBreak::create([
+                    'correction_id' => $correction->id,
+                    'break_start'   => $b['start'] ?? null,
+                    'break_end'     => $b['end'] ?? null,
+                ]);
             }
         }
 
-        // ===============================
-        // ④ 追加休憩（1件追加用）
-        // ===============================
-        if (!empty($request->breaks_new['start']) || !empty($request->breaks_new['end'])) {
-
+        if (!empty($data['breaks_new']['start']) || !empty($data['breaks_new']['end'])) {
             AttendanceCorrectionBreak::create([
                 'correction_id' => $correction->id,
-                'break_start'   => $request->breaks_new['start'],
-                'break_end'     => $request->breaks_new['end'],
+                'break_start'   => $data['breaks_new']['start'] ?? null,
+                'break_end'     => $data['breaks_new']['end'] ?? null,
             ]);
         }
 
-
         return redirect()
             ->route('attendance.detail', $attendance->id)
-            ->with('message', '修正申請を提出しました');
+            ->with('message', '修正申請を作成しました');
     }
+
 }
